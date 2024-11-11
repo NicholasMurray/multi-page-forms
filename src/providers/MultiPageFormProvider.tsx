@@ -19,12 +19,13 @@ export interface PageData {
 export type FormData = PageData[];
 
 // Define the type for the context
-interface FormContextType {
+export interface FormContextType {
   formData: FormData;
   updateFormData: (pageIndex: number, fields: FormField[]) => void;
 }
 
 // Create Context with an initial empty value
+// eslint-disable-next-line react-refresh/only-export-components
 export const FormContext = createContext<FormContextType | undefined>(
   undefined
 );

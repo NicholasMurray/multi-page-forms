@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { useMultiPageForm } from "./hooks/useMultiPageForm";
 import { FormField } from "./providers/MultiPageFormProvider";
 
