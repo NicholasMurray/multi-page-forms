@@ -1,6 +1,9 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { useMultiPageForm } from "./hooks/useMultiPageForm";
-import { FormField } from "./providers/MultiPageFormProvider";
+import { useMultiPageForm } from "../hooks/useMultiPageForm";
+import { FormField } from "../providers/MultiPageFormProvider";
+import { IFormInput, FormSchema } from "./FormSchema";
 
 interface Props {
   currentPage: number;
@@ -8,7 +11,7 @@ interface Props {
 }
 
 // Example of a Page Component
-export const Page2 = ({ currentPage, setCurrentPage }: Props) => {
+export const Page1 = ({ currentPage, setCurrentPage }: Props) => {
   const { formData, updateFormData } = useMultiPageForm();
   const [localFields, setLocalFields] = useState<FormField[]>(() => {
     // Initialize with existing fields or an empty array
@@ -18,6 +21,14 @@ export const Page2 = ({ currentPage, setCurrentPage }: Props) => {
           { name: "field1", value: "" },
           { name: "field2", value: "" },
         ];
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: zodResolver(FormSchema),
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,36 +47,41 @@ export const Page2 = ({ currentPage, setCurrentPage }: Props) => {
     });
   };
 
-  const handleSubmit = () => {
+  const onSubmit = (data: IFormInput) => {
+    console.log("onSubmit called");
     updateFormData(currentPage, localFields); // Update data for current page
     setCurrentPage(currentPage + 1);
-    // navigate to next page
+    console.log(data);
   };
 
   return (
     <div>
-      <h2>Current Page: {currentPage}</h2>
-      <form>
+      <h2>Current Page: {currentPage + 1}</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
           <div>
             <label htmlFor="field1">Field1</label>
             <input
-              name="field1"
               value={localFields.find((f) => f.name === "field1")?.value || ""}
-              onChange={handleChange}
-              placeholder="Field 1"
+              {...register("field1", {
+                onChange: (e) => handleChange(e),
+              })}
             />
+            {errors?.field1?.message && <p>{errors.field1.message}</p>}
           </div>
           <div>
             <label htmlFor="field2">Field2</label>
             <input
-              name="field2"
               value={localFields.find((f) => f.name === "field2")?.value || ""}
-              onChange={handleChange}
-              placeholder="Field 2"
+              {...register("field2", {
+                onChange: (e) => handleChange(e),
+              })}
             />
+            {errors?.field2?.message && <p>{errors.field2.message}</p>}
           </div>
-          <button onClick={handleSubmit}>Next</button>
+          <button type="submit" onClick={handleSubmit(onSubmit)}>
+            Next
+          </button>
         </fieldset>
       </form>
     </div>

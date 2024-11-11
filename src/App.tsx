@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MultiPageFormProvider } from "./providers/MultiPageFormProvider";
-import { Page1 } from "./Page1";
-import { Page2 } from "./Page2";
-import { Summary } from "./Summary";
+import { Page1 } from "./pages/Page1";
+import { Page2 } from "./pages/Page2";
+import { Summary } from "./pages/Summary";
 import "./App.css";
 
 function App() {

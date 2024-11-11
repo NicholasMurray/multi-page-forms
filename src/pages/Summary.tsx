@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { FormField, PageData } from "./providers/MultiPageFormProvider";
-import { useMultiPageForm } from "./hooks/useMultiPageForm";
+import { FormField, PageData } from "../providers/MultiPageFormProvider";
+import { useMultiPageForm } from "../hooks/useMultiPageForm";
 
 interface Props {
   currentPage: number;
